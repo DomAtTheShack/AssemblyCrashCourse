@@ -2,11 +2,28 @@
 .segment "CODE"
 
 .proc Main
-  ; Start by loading the value 5 into both the X and Y registers
-  ldx #$ff
-  ldy #$00
-  dey
-  inx
-
+  jmp intiControl
   rts
+
+intiControl:
+  ;Inti Output mem
+    lda #1
+    sta $20
+
+    ;Send latch to pulse the controller
+    sta $4016
+    lda #0
+    sta $4016
+    jmp read_loop
+    rts
+
+    ; Read The buttons
+read_loop:
+    lda $4016
+    lsr
+    ror $20
+    bcc read_loop
+
+    rts
+
 .endproc
