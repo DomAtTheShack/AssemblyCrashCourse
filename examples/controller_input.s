@@ -2,15 +2,10 @@
 .export CheckController
 .segment "CODE"
 
-PRESSING = %00000000
+PRESSING = $21
 
 .proc Main
-    jmp CheckController
 
-.endproc
-
-.proc CheckController
-CheckController:
     lda #$01
     sta $4016 ;Strobes to connecter
     ldx #$00
@@ -46,20 +41,6 @@ CheckUp:
     and PRESSING
     beq EndControl
 
-EndControl:
-    rts
 
-NoButtonPressed:
-   lda #255
-   sta $05
-   sta $06
-   rts
-
-ButtonPressed:
-   ; Code to handle when a button is not pressed
-   lda #32
-   sta $05
-   sta $06
-   rts
 .endproc
 

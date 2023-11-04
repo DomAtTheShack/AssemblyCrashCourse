@@ -1,4 +1,5 @@
-.import Main
+.import Control
+.import CheckControl
 
 .segment "HEADER"
   .byte $4E, $45, $53, $1A  ; iNES header identifier
@@ -72,9 +73,10 @@
   bpl @vblankWait2
   jsr ResetPalettes
 main:
-  jsr Main
   lda #%00001000
   sta $2001
 endlessLoop:
+  jsr Control
+  jsr CheckControl
   jmp endlessLoop
 .endproc
